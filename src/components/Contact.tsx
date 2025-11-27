@@ -35,7 +35,7 @@ export default function Contact() {
 
     try {
       // POST al webhook de n8n
-      const response = await fetch('https://n8n.frann375.site/webhook-test/e247b109-b9d6-4c64-9cf0-f3f1f1e7911a', {
+      const response = await fetch(process.env.NEXT_PUBLIC_N8N_BOOKING, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
