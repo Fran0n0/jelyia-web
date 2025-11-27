@@ -141,14 +141,14 @@ export default function Contact() {
                         <SelectValue placeholder="Seleccioná tu industria" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="healthcare">Salud</SelectItem>
+                        <SelectItem value="salud">Salud</SelectItem>
                         <SelectItem value="retail">Retail</SelectItem>
                         <SelectItem value="ecommerce">E-commerce</SelectItem>
-                        <SelectItem value="services">Servicios Profesionales</SelectItem>
-                        <SelectItem value="realestate">Inmobiliaria</SelectItem>
-                        <SelectItem value="education">Educación</SelectItem>
-                        <SelectItem value="government">Gobierno</SelectItem>
-                        <SelectItem value="other">Otro</SelectItem>
+                        <SelectItem value="servicios_profesionales">Servicios Profesionales</SelectItem>
+                        <SelectItem value="inmobiliaria">Inmobiliaria</SelectItem>
+                        <SelectItem value="educación">Educación</SelectItem>
+                        <SelectItem value="gobierno">Gobierno</SelectItem>
+                        <SelectItem value="otro">Otro</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
