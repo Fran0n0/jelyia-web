@@ -12,13 +12,13 @@ const caseStudies = [
   title: "Sistema de IA para Clínica Dental",
   industry: "Salud",
   description:
-  "Implementamos un sistema inteligente de reserva de turnos con integración a WhatsApp y recordatorios automáticos a pacientes.",
+  "Implementamos un sistema inteligente a WhatsApp + Evolution API para comunicación directa. Realiza lo siguiente: Gestión automática de citas, reprogramaciones y confirmaciones, Base de datos interna para registrar cada interacción, Un flujo de seguimiento inteligente que vuelve a contactar al paciente automáticamente a los 3, 7 y 15 días después de su consulta o tratamiento..",
   results: [
   "80% de reducción en turnos perdidos",
   "Proceso de reserva 3x más rápido",
   "95% de satisfacción de pacientes"],
 
-  image: "https://images.unsplash.com/photo-1629909615957-be38a9e3ff84?w=800&q=80"
+  image: "/img/instituto-dental.jpg"
 },
 {
   title: "Automatización para Reparación de PCs",
@@ -30,19 +30,19 @@ const caseStudies = [
   "40% de aumento en clientes recurrentes",
   "Gestión de inventario en tiempo real"],
 
-  image: "https://images.unsplash.com/photo-1588508065123-287b28e013da?w=800&q=80"
+  image: "/img/origenpc.jpg"
 },
 {
-  title: "Asistente Digital Ciudad de Oberá",
-  industry: "Gobierno",
+  title: "IA Institucional de educación privada",
+  industry: "Educación",
   description:
-  "Desarrollamos un asistente con IA para atención ciudadana que gestiona consultas, solicitudes de documentos e información de servicios públicos.",
+  "El instituto IPET 1308 necesitaba responder consultas sobre carreras, inscripciones y stock de vacantes. El volumen crecia cada año y los administrativos no daban a basto.                                                                                      LA SOLUCION: El desarrollo de una IA con funcionamiento 24/7, RAG conenctado a documentos internos, respuestas oficiales verificadas, Orquestador de consultas con n8n y Postgres, integracions con whatsapp para atención inmediata",
   results: [
-  "10,000+ ciudadanos atendidos mensualmente",
-  "70% de reducción en carga del call center",
+  "Reduccion drámatica de consultas repetidas",
+  "Los administrativos recuperaron horas para tareas internas.",
   "Soporte multilingüe 24/7"],
 
-  image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+  image: "/img/ipet.jpg"
 }];
 
 
@@ -83,7 +83,7 @@ export default function CaseStudies() {
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                   style={{ backgroundImage: `url(${study.image})` }} />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent !bg-cover !bg-center !bg-none !block !bg-[url(https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/735630f5-2c22-45a4-8385-26f47fa100b6/visual-edit-uploads/1764195221194-dvvhlmkzjve.jpeg)] !bg-cover !bg-center !w-full !h-full" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent !bg-cover !bg-center !bg-none !block !bg-[url(https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/735630f5-2c22-45a4-8385-26f47fa100b6/visual-edit-uploads/1764195221194-dvvhlmkzjve.jpeg)] !bg-cover !bg-center !w-full !h-full !text-base" />
                   <div className="absolute top-4 left-4">
                     <Badge className="bg-violet/90 hover:bg-violet text-white">
                       {study.industry}

@@ -17,7 +17,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    businessType: "",
+    businessType: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -25,33 +25,33 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validación básica: campos no vacíos
     if (!formData.name.trim() || !formData.email.trim() || !formData.businessType) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       // POST al webhook de n8n
       const response = await fetch('https://n8n.frann375.site/webhook-test/e247b109-b9d6-4c64-9cf0-f3f1f1e7911a', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           nombre: formData.name,
           email: formData.email,
           tipoNegocio: formData.businessType,
-          fecha: new Date().toISOString(),
-        }),
+          fecha: new Date().toISOString()
+        })
       });
 
       if (response.ok) {
         setSubmitted(true);
         setFormData({ name: "", email: "", businessType: "" });
-        
+
         // Reset success message after 5 seconds
         setTimeout(() => setSubmitted(false), 5000);
       }
@@ -78,8 +78,8 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+          className="text-center mb-16">
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Comencemos <span className="text-violet">Juntos</span>
           </h2>
@@ -94,8 +94,8 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+            transition={{ duration: 0.6, delay: 0.2 }}>
+
             <Card className="bg-card border border-violet/20 shadow-2xl shadow-violet/10">
               <CardHeader>
                 <CardTitle className="text-2xl">Solicitá tu Demo</CardTitle>
@@ -113,8 +113,8 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      className="border-violet/30 focus:border-violet"
-                    />
+                      className="border-violet/30 focus:border-violet" />
+
                   </div>
 
                   <div className="space-y-2">
@@ -126,8 +126,8 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      className="border-violet/30 focus:border-violet"
-                    />
+                      className="border-violet/30 focus:border-violet" />
+
                   </div>
 
                   <div className="space-y-2">
@@ -135,8 +135,8 @@ export default function Contact() {
                     <Select
                       value={formData.businessType}
                       onValueChange={(value) => setFormData({ ...formData, businessType: value })}
-                      required
-                    >
+                      required>
+
                       <SelectTrigger className="border-violet/30 focus:border-violet">
                         <SelectValue placeholder="Seleccioná tu industria" />
                       </SelectTrigger>
@@ -156,18 +156,18 @@ export default function Contact() {
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-violet to-cyan hover:from-violet-dark hover:to-cyan-dark transition-all duration-300 shadow-lg shadow-violet/50 hover:shadow-xl hover:shadow-violet/60"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      "Enviando..."
-                    ) : submitted ? (
-                      "¡Recibido! Nos pondremos en contacto"
-                    ) : (
-                      <>
+                    disabled={isSubmitting}>
+
+                    {isSubmitting ?
+                    "Enviando..." :
+                    submitted ?
+                    "¡Recibido! Nos pondremos en contacto" :
+
+                    <>
                         <Send className="w-4 h-4 mr-2" />
                         Solicitar Demo
                       </>
-                    )}
+                    }
                   </Button>
                 </form>
               </CardContent>
@@ -179,8 +179,8 @@ export default function Contact() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
-          >
+            className="space-y-8">
+
             <div>
               <h3 className="text-2xl font-bold mb-6">Contactanos</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
@@ -198,9 +198,9 @@ export default function Contact() {
                   <h4 className="font-semibold mb-1">Email</h4>
                   <a
                     href="mailto:contact@jelyia.com"
-                    className="text-muted-foreground hover:text-violet transition-colors"
-                  >
-                    contact@jelyia.com
+                    className="text-muted-foreground hover:text-violet transition-colors !whitespace-pre-line !whitespace-pre-line">jurjely@jelyia.com
+
+
                   </a>
                 </div>
               </div>
@@ -213,9 +213,9 @@ export default function Contact() {
                   <h4 className="font-semibold mb-1">Teléfono</h4>
                   <a
                     href="tel:+543764000000"
-                    className="text-muted-foreground hover:text-cyan transition-colors"
-                  >
-                    +54 3764 000000
+                    className="text-muted-foreground hover:text-cyan transition-colors !whitespace-pre-line">+54 3755 249369
+
+
                   </a>
                 </div>
               </div>
@@ -239,14 +239,14 @@ export default function Contact() {
             <Card className="bg-gradient-to-br from-violet/10 to-cyan/10 border-violet/30 mt-8">
               <CardContent className="p-6">
                 <h4 className="text-xl font-bold mb-2">¿Listo para Automatizar?</h4>
-                <p className="text-muted-foreground mb-4">
-                  Sumate a más de 200 empresas que ya están transformando sus operaciones con jelyIA.
+                <p className="text-muted-foreground mb-4 !whitespace-pre-line">Sumate a más de 2000 integraciones que ya están transformando empresas con JELYIA.
+
                 </p>
                 <Button
                   variant="outline"
                   className="w-full border-violet hover:bg-violet hover:text-white transition-all duration-300"
-                  onClick={() => setIsModalOpen(true)}
-                >
+                  onClick={() => setIsModalOpen(true)}>
+
                   Agendar una Llamada
                 </Button>
               </CardContent>
@@ -257,6 +257,6 @@ export default function Contact() {
 
       {/* Booking Modal */}
       <BookingModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-    </section>
-  );
+    </section>);
+
 }

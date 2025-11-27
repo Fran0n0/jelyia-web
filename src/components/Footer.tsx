@@ -4,31 +4,30 @@ import { Facebook, Instagram, Linkedin, Twitter, Mail } from "lucide-react";
 
 const footerLinks = {
   Empresa: [
-    { name: "Nosotros", href: "#about" },
-    { name: "Servicios", href: "#services" },
-    { name: "Casos de Éxito", href: "#case-studies" },
-    { name: "Contacto", href: "#contact" },
-  ],
+  { name: "Nosotros", href: "#about" },
+  { name: "Servicios", href: "#services" },
+  { name: "Casos de Éxito", href: "#case-studies" },
+  { name: "Contacto", href: "#contact" }],
+
   Servicios: [
-    { name: "Bots de WhatsApp", href: "#services" },
-    { name: "Reportes con IA", href: "#services" },
-    { name: "Automatización de Ventas", href: "#services" },
-    { name: "Dashboards", href: "#services" },
-  ],
+  { name: "Bots de WhatsApp", href: "#services" },
+  { name: "Reportes con IA", href: "#services" },
+  { name: "Automatización de Ventas", href: "#services" },
+  { name: "Dashboards", href: "#services" }],
+
   Recursos: [
-    { name: "Blog", href: "#" },
-    { name: "Documentación", href: "#" },
-    { name: "FAQ", href: "#" },
-    { name: "Soporte", href: "#" },
-  ],
+  { name: "Blog", href: "#" },
+  { name: "Documentación", href: "#" },
+  { name: "FAQ", href: "#" },
+  { name: "Soporte", href: "#" }]
+
 };
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-];
+{ icon: Facebook, href: "#", label: "Facebook" },
+{ icon: Instagram, href: "https://www.instagram.com/franco_jurjely/", label: "Instagram" },
+{ icon: Linkedin, href: "https://www.linkedin.com/in/franco-jurjely-79a2a0298/", label: "LinkedIn" }];
+
 
 export default function Footer() {
   return (
@@ -38,8 +37,8 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="col-span-2">
             <a href="#" className="text-3xl font-bold inline-block mb-4">
-              <span className="bg-gradient-to-r from-violet to-cyan bg-clip-text text-transparent">
-                jely
+              <span className="bg-gradient-to-r from-violet to-cyan bg-clip-text text-transparent !whitespace-pre-line">JELY
+
               </span>
               <span className="text-foreground">IA</span>
             </a>
@@ -55,33 +54,33 @@ export default function Footer() {
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
-                    className="w-10 h-10 bg-violet/10 hover:bg-violet/20 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
-                  >
+                    className="w-10 h-10 bg-violet/10 hover:bg-violet/20 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+
                     <Icon className="w-5 h-5 text-violet" />
-                  </a>
-                );
+                  </a>);
+
               })}
             </div>
           </div>
 
           {/* Links Columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
+          {Object.entries(footerLinks).map(([category, links]) =>
+          <div key={category}>
               <h3 className="font-semibold text-foreground mb-4">{category}</h3>
               <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.name}>
+                {links.map((link) =>
+              <li key={link.name}>
                     <a
-                      href={link.href}
-                      className="text-muted-foreground hover:text-violet transition-colors duration-300"
-                    >
+                  href={link.href}
+                  className="text-muted-foreground hover:text-violet transition-colors duration-300">
+
                       {link.name}
                     </a>
                   </li>
-                ))}
+              )}
               </ul>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Newsletter */}
@@ -102,8 +101,8 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Ingresá tu email"
-                className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-background border border-border focus:border-violet focus:outline-none"
-              />
+                className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-background border border-border focus:border-violet focus:outline-none" />
+
               <button className="px-6 py-3 bg-gradient-to-r from-violet to-cyan hover:from-violet-dark hover:to-cyan-dark rounded-xl text-white font-medium transition-all duration-300 shadow-lg shadow-violet/30 hover:shadow-xl hover:shadow-violet/40">
                 Suscribirse
               </button>
@@ -130,6 +129,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
