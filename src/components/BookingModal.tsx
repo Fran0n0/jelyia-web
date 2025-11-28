@@ -6,12 +6,39 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight, Calendar, Clock, User, Mail, Briefcase, CheckCircle2 } from "lucide-react";
 
 interface BookingModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+// Array de códigos de país
+const countryCodes = [
+  { flag: "🇦🇷", name: "Argentina", code: "+54" },
+  { flag: "🇧🇴", name: "Bolivia", code: "+591" },
+  { flag: "🇧🇷", name: "Brasil", code: "+55" },
+  { flag: "🇨🇱", name: "Chile", code: "+56" },
+  { flag: "🇨🇴", name: "Colombia", code: "+57" },
+  { flag: "🇨🇷", name: "Costa Rica", code: "+506" },
+  { flag: "🇨🇺", name: "Cuba", code: "+53" },
+  { flag: "🇪🇨", name: "Ecuador", code: "+593" },
+  { flag: "🇸🇻", name: "El Salvador", code: "+503" },
+  { flag: "🇪🇸", name: "España", code: "+34" },
+  { flag: "🇺🇸", name: "Estados Unidos", code: "+1" },
+  { flag: "🇬🇹", name: "Guatemala", code: "+502" },
+  { flag: "🇭🇳", name: "Honduras", code: "+504" },
+  { flag: "🇲🇽", name: "México", code: "+52" },
+  { flag: "🇳🇮", name: "Nicaragua", code: "+505" },
+  { flag: "🇵🇦", name: "Panamá", code: "+507" },
+  { flag: "🇵🇾", name: "Paraguay", code: "+595" },
+  { flag: "🇵🇪", name: "Perú", code: "+51" },
+  { flag: "🇵🇷", name: "Puerto Rico", code: "+1" },
+  { flag: "🇩🇴", name: "Rep. Dominicana", code: "+1" },
+  { flag: "🇺🇾", name: "Uruguay", code: "+598" },
+  { flag: "🇻🇪", name: "Venezuela", code: "+58" },
+];
 
 const businessTypes = [
   "Salud",
@@ -39,6 +66,8 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
     firstName: "",
     lastName: "",
     email: "",
+    countryCode: "+54", // Default: Argentina
+    phoneNumber: "",
     businessType: "",
   });
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -88,11 +117,14 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
     e.preventDefault();
     
     // Validación: todos los campos deben estar completos
-    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.businessType) {
+    if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.phoneNumber.trim() || !formData.businessType) {
       return;
     }
 
     setIsSubmitting(true);
+
+    // Concatenar código de país + número
+    const fullPhone = `${formData.countryCode} ${formData.phoneNumber}`;
 
     try {
       // POST al webhook de n8n con los datos de la reserva
@@ -105,6 +137,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
           nombre: formData.firstName,
           apellido: formData.lastName,
           email: formData.email,
+          telefono: fullPhone,
           tipoNegocio: formData.businessType,
           fecha: selectedDate?.toISOString(),
           hora: selectedTime,
@@ -123,7 +156,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
             setStep(1);
             setSelectedDate(null);
             setSelectedTime("");
-            setFormData({ firstName: "", lastName: "", email: "", businessType: "" });
+            setFormData({ firstName: "", lastName: "", email: "", countryCode: "+54", phoneNumber: "", businessType: "" });
             setSubmitted(false);
             setIsSubmitting(false);
           }, 300);
@@ -140,7 +173,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
           setStep(1);
           setSelectedDate(null);
           setSelectedTime("");
-          setFormData({ firstName: "", lastName: "", email: "", businessType: "" });
+          setFormData({ firstName: "", lastName: "", email: "", countryCode: "+54", phoneNumber: "", businessType: "" });
           setSubmitted(false);
           setIsSubmitting(false);
         }, 300);
@@ -371,6 +404,38 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
                     required
                     className="bg-card border-border/50 focus:border-violet"
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-sm font-medium">
+                    Teléfono
+                  </Label>
+                  <div className="flex gap-2">
+                    <Select
+                      value={formData.countryCode}
+                      onValueChange={(value) => setFormData({ ...formData, countryCode: value })}
+                    >
+                      <SelectTrigger className="w-[120px] bg-card border-border/50 focus:border-violet">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {countryCodes.map((country) => (
+                          <SelectItem key={country.code + country.name} value={country.code}>
+                            {country.flag} {country.code}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="9 11 1234 5678"
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                      required
+                      className="flex-1 bg-card border-border/50 focus:border-violet"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">

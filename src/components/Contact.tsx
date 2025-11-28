@@ -11,12 +11,40 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import BookingModal from "@/components/BookingModal";
 
+// Array de códigos de país
+const countryCodes = [
+  { flag: "🇦🇷", name: "Argentina", code: "+54" },
+  { flag: "🇧🇴", name: "Bolivia", code: "+591" },
+  { flag: "🇧🇷", name: "Brasil", code: "+55" },
+  { flag: "🇨🇱", name: "Chile", code: "+56" },
+  { flag: "🇨🇴", name: "Colombia", code: "+57" },
+  { flag: "🇨🇷", name: "Costa Rica", code: "+506" },
+  { flag: "🇨🇺", name: "Cuba", code: "+53" },
+  { flag: "🇪🇨", name: "Ecuador", code: "+593" },
+  { flag: "🇸🇻", name: "El Salvador", code: "+503" },
+  { flag: "🇪🇸", name: "España", code: "+34" },
+  { flag: "🇺🇸", name: "Estados Unidos", code: "+1" },
+  { flag: "🇬🇹", name: "Guatemala", code: "+502" },
+  { flag: "🇭🇳", name: "Honduras", code: "+504" },
+  { flag: "🇲🇽", name: "México", code: "+52" },
+  { flag: "🇳🇮", name: "Nicaragua", code: "+505" },
+  { flag: "🇵🇦", name: "Panamá", code: "+507" },
+  { flag: "🇵🇾", name: "Paraguay", code: "+595" },
+  { flag: "🇵🇪", name: "Perú", code: "+51" },
+  { flag: "🇵🇷", name: "Puerto Rico", code: "+1" },
+  { flag: "🇩🇴", name: "Rep. Dominicana", code: "+1" },
+  { flag: "🇺🇾", name: "Uruguay", code: "+598" },
+  { flag: "🇻🇪", name: "Venezuela", code: "+58" },
+];
+
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    countryCode: "+54", // Default: Argentina
+    phoneNumber: "",
     businessType: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,15 +55,18 @@ export default function Contact() {
     e.preventDefault();
 
     // Validación básica: campos no vacíos
-    if (!formData.name.trim() || !formData.email.trim() || !formData.businessType) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phoneNumber.trim() || !formData.businessType) {
       return;
     }
 
     setIsSubmitting(true);
 
+    // Concatenar código de país + número
+    const fullPhone = `${formData.countryCode} ${formData.phoneNumber}`;
+
     try {
       // POST al webhook de n8n
-      const response = await fetch(process.env.NEXT_PUBLIC_N8N_BOOKING, {
+      const response = await fetch('https://n8n.frann375.site/webhook-test/e247b109-b9d6-4c64-9cf0-f3f1f1e7911a', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -43,6 +74,7 @@ export default function Contact() {
         body: JSON.stringify({
           nombre: formData.name,
           email: formData.email,
+          telefono: fullPhone,
           tipoNegocio: formData.businessType,
           fecha: new Date().toISOString()
         })
@@ -50,7 +82,7 @@ export default function Contact() {
 
       if (response.ok) {
         setSubmitted(true);
-        setFormData({ name: "", email: "", businessType: "" });
+        setFormData({ name: "", email: "", countryCode: "+54", phoneNumber: "", businessType: "" });
 
         // Reset success message after 5 seconds
         setTimeout(() => setSubmitted(false), 5000);
@@ -59,7 +91,7 @@ export default function Contact() {
       console.error('Error al enviar formulario:', error);
       // En caso de error, igual mostramos el mensaje de éxito para UX
       setSubmitted(true);
-      setFormData({ name: "", email: "", businessType: "" });
+      setFormData({ name: "", email: "", countryCode: "+54", phoneNumber: "", businessType: "" });
       setTimeout(() => setSubmitted(false), 5000);
     } finally {
       setIsSubmitting(false);
@@ -114,7 +146,6 @@ export default function Contact() {
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
                       className="border-violet/30 focus:border-violet" />
-
                   </div>
 
                   <div className="space-y-2">
@@ -127,7 +158,34 @@ export default function Contact() {
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
                       className="border-violet/30 focus:border-violet" />
+                  </div>
 
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Teléfono</Label>
+                    <div className="flex gap-2">
+                      <Select
+                        value={formData.countryCode}
+                        onValueChange={(value) => setFormData({ ...formData, countryCode: value })}>
+                        <SelectTrigger className="w-[120px] border-violet/30 focus:border-violet">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {countryCodes.map((country) => (
+                            <SelectItem key={country.code + country.name} value={country.code}>
+                              {country.flag} {country.code}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="9 11 1234 5678"
+                        value={formData.phoneNumber}
+                        onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                        required
+                        className="flex-1 border-violet/30 focus:border-violet" />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
@@ -141,14 +199,14 @@ export default function Contact() {
                         <SelectValue placeholder="Seleccioná tu industria" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="salud">Salud</SelectItem>
+                        <SelectItem value="healthcare">Salud</SelectItem>
                         <SelectItem value="retail">Retail</SelectItem>
                         <SelectItem value="ecommerce">E-commerce</SelectItem>
-                        <SelectItem value="servicios_profesionales">Servicios Profesionales</SelectItem>
-                        <SelectItem value="inmobiliaria">Inmobiliaria</SelectItem>
-                        <SelectItem value="educación">Educación</SelectItem>
-                        <SelectItem value="gobierno">Gobierno</SelectItem>
-                        <SelectItem value="otro">Otro</SelectItem>
+                        <SelectItem value="services">Servicios Profesionales</SelectItem>
+                        <SelectItem value="realestate">Inmobiliaria</SelectItem>
+                        <SelectItem value="education">Educación</SelectItem>
+                        <SelectItem value="government">Gobierno</SelectItem>
+                        <SelectItem value="other">Otro</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
