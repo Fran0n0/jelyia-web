@@ -66,7 +66,7 @@ export default function Contact() {
 
     try {
       // POST al webhook de n8n
-      const response = await fetch('process.env.NEXT_PUBLIC_N8N_CONTACT', {
+      const response = await fetch(process.env.NEXT_PUBLIC_N8N_CONTACT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
